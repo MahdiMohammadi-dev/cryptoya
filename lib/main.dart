@@ -1,7 +1,6 @@
+import 'package:cryptoya/providers/CryptoDataprovider.dart';
 import 'package:cryptoya/providers/themeProvider.dart';
 import 'package:cryptoya/ui/MainWrapper.dart';
-import 'package:cryptoya/ui/Widgets/changeTheme.dart';
-import 'package:cryptoya/ui/test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -18,6 +17,9 @@ void main() {
       ChangeNotifierProvider(
         create: (context) => ThemeProvider(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => CryptoDataProvider(),
+      )
     ],
     child: const MyApp(),
   ));
