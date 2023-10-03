@@ -1,6 +1,10 @@
+import 'package:cryptoya/network/ResponseModel.dart';
+import 'package:cryptoya/providers/UserProvider.dart';
+import 'package:cryptoya/ui/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -172,7 +176,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(
                         height: height * 0.02,
                       ),
-                      singUpBtn(),
+                      Consumer<UserProvider>(
+                        builder: (context, value, child) {
+                          switch (value..registerstatus.status) {
+                            case Status.Loading:
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            case Status.Completed:
+                              WidgetsBinding.instance.addPostFrameCallback(
+                                (timeStamp) => Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HomePage(),
+                                    )),
+                              );
+                              return singUpBtn();
+                            case Status.Error:
+                              return const Center(
+                                  child:
+                                      Text('Error Palease Try Again Later!!'));
+                            default:
+                              return singUpBtn();
+                          }
+                        },
+                      )
                     ],
                   )),
             ),
