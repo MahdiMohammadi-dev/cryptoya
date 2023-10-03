@@ -1,6 +1,8 @@
 import 'package:cryptoya/providers/CryptoDataprovider.dart';
+import 'package:cryptoya/providers/MarketViewProvidewr.dart';
 import 'package:cryptoya/providers/themeProvider.dart';
 import 'package:cryptoya/ui/MainWrapper.dart';
+import 'package:cryptoya/ui/SingupScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -19,7 +21,10 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => CryptoDataProvider(),
-      )
+      ),
+      ChangeNotifierProvider(
+        create: (context) => MarketViewProvider(),
+      ),
     ],
     child: const MyApp(),
   ));
@@ -48,7 +53,7 @@ class _MyAppState extends State<MyApp> {
           ],
           supportedLocales: const [
             Locale('en'), // English
-            Locale('fa'), // persian
+            Locale('fa'), // Persian
           ],
           themeMode: value.themeMode,
           theme: MyTheme.lightTheme,
@@ -56,7 +61,10 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           home: const Directionality(
             textDirection: TextDirection.ltr,
-            child: Scaffold(body: MainWrapper()),
+            child: Scaffold(
+              // body: MainWrapper(),
+              body: SignUpScreen(),
+            ),
           ),
         );
       },

@@ -27,4 +27,40 @@ class CryptoDataProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  getTopGainerData() async {
+    state = ResponseModel.loading("Please Wait!!!");
+
+    try {
+      response = await allApi.getTopGainerData();
+      if (response.statusCode == 200) {
+        datafuture = AllCryptoModel.fromJson(response.data);
+        state = ResponseModel.complete(datafuture);
+      } else {
+        state = ResponseModel.error("Error...ComeBackLater!");
+      }
+      notifyListeners();
+    } catch (e) {
+      state = ResponseModel.error(e.toString());
+      notifyListeners();
+    }
+  }
+
+  getTopLosersData() async {
+    state = ResponseModel.loading("Please Wait!!!");
+
+    try {
+      response = await allApi.getTopLosersData();
+      if (response.statusCode == 200) {
+        datafuture = AllCryptoModel.fromJson(response.data);
+        state = ResponseModel.complete(datafuture);
+      } else {
+        state = ResponseModel.error("Error...ComeBackLater!");
+      }
+      notifyListeners();
+    } catch (e) {
+      state = ResponseModel.error(e.toString());
+      notifyListeners();
+    }
+  }
 }

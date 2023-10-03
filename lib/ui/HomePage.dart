@@ -41,6 +41,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var cryptoproviders = Provider.of<CryptoDataProvider>(context);
     var primaryColor = Theme.of(context).primaryColor;
     TextTheme textTheme = Theme.of(context).textTheme;
     var size = MediaQuery.of(context).size;
@@ -82,7 +83,40 @@ class _HomePageState extends State<HomePage> {
                 BuyAndSellButton(),
 
                 ///TODO:ChoiceChip Section
-                ChoiceChipSection(textTheme),
+                Padding(
+                  padding: EdgeInsets.only(right: 5, left: 5),
+                  child: Wrap(
+                      spacing: 10,
+                      children: List.generate(choicechiptitle.length, (index) {
+                        return ChoiceChip(
+                          label: Text(
+                            choicechiptitle[index],
+                            style: textTheme.titleSmall,
+                          ),
+                          selected: defaultchoicechipsindex == index,
+                          selectedColor: Colors.blue,
+                          onSelected: (value) {
+                            setState(
+                              () {
+                                defaultchoicechipsindex =
+                                    value ? index : defaultchoicechipsindex;
+                                switch (index) {
+                                  case 0:
+                                    cryptoproviders.getTopMarketCapData();
+                                    break;
+                                  case 1:
+                                    cryptoproviders.getTopGainerData();
+                                    break;
+                                  case 2:
+                                    cryptoproviders.getTopLosersData();
+                                    break;
+                                }
+                              },
+                            );
+                          },
+                        );
+                      })),
+                ),
                 SizedBox(
                   height: 500,
                   child: Consumer<CryptoDataProvider>(
@@ -156,7 +190,7 @@ class _HomePageState extends State<HomePage> {
                                           imageUrl:
                                               "https://s2.coinmarketcap.com/static/img/coins/64x64/$tokenid.png",
                                           placeholder: (context, url) =>
-                                              CircularProgressIndicator(),
+                                              const CircularProgressIndicator(),
                                           errorWidget: (context, url, error) =>
                                               const Icon(Icons.error),
                                         ),
@@ -201,6 +235,7 @@ class _HomePageState extends State<HomePage> {
                                               Text(
                                                 "\$$finalprice",
                                                 style: textTheme.bodySmall,
+                                                overflow: TextOverflow.ellipsis,
                                               ),
                                               Row(
                                                 mainAxisAlignment:
@@ -209,6 +244,8 @@ class _HomePageState extends State<HomePage> {
                                                   percenticon,
                                                   Text(
                                                     percentChange + "%",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                     style: GoogleFonts.ubuntu(
                                                         color: percentcolor,
                                                         fontSize: 13),
@@ -239,33 +276,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ));
-  }
-
-  Padding ChoiceChipSection(TextTheme textTheme) {
-    return Padding(
-      padding: EdgeInsets.only(right: 5, left: 5),
-      child: Wrap(
-          spacing: 10,
-          children: List.generate(
-            choicechiptitle.length,
-            (index) {
-              return ChoiceChip(
-                label: Text(
-                  choicechiptitle[index],
-                  style: textTheme.titleSmall,
-                ),
-                selected: defaultchoicechipsindex == index,
-                selectedColor: Colors.blue,
-                onSelected: (value) {
-                  setState(() {
-                    defaultchoicechipsindex =
-                        value ? index : defaultchoicechipsindex;
-                  });
-                },
-              );
-            },
-          )),
-    );
   }
 }
 
