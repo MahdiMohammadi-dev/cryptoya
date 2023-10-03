@@ -2,7 +2,6 @@ import 'package:cryptoya/providers/CryptoDataprovider.dart';
 import 'package:cryptoya/providers/MarketViewProvidewr.dart';
 import 'package:cryptoya/providers/UserProvider.dart';
 import 'package:cryptoya/providers/themeProvider.dart';
-import 'package:cryptoya/ui/MainWrapper.dart';
 import 'package:cryptoya/ui/SingupScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,7 +47,7 @@ class _MyAppState extends State<MyApp> {
     return Consumer<ThemeProvider>(
       builder: (context, value, child) {
         return MaterialApp(
-          locale: Locale('fa'),
+          locale: Locale('en'),
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
