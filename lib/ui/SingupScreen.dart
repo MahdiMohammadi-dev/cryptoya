@@ -71,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               height: height * 0.03,
             ),
             Padding(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: Form(
                   key: formkey,
                   child: Column(
